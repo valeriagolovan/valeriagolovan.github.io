@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 
 <head>
@@ -7,6 +7,32 @@
     <title>Drupal Coder</title>
     <link rel="stylesheet" media="all" href="//cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/popup.css">
+    <script src="https://unpkg.com/vue"></script>
+
+    <script type="x/template" id="modal-template">
+        <transition name="modal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-container">
+                        <div class="modal-header">
+                            <slot name="header"></slot>
+                        </div>
+                        <div class="modal-body">
+                            <slot name="middle"></slot>
+                        </div>
+                        <div class="modal-footer">
+                            <slot name="footer">
+                                <button class="modal-default-button" @click="$emit('close')">
+                                    <span>X</span><span>Закрыть</span>
+                                </button>
+                            </slot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </script>
 </head>
 
 <body>
@@ -483,98 +509,141 @@
             </article>
 
             <!--  тарифы -->
-            <section id="block-tariffs">
-                <h2 class="block-title">Тарифы</h2>
-                <div>
-                    <div class="tariffs">
-                        <div class="container">
-                            <div class="row row-flex tariffs-row">
-                                <!-- Стартовый -->
-                                <div class="col-sm-4 col-xs-12 col-flex">
-                                    <div class="tariff">
-                                        <div class="tariff-wrapper">
-                                            <div class="tariff-header">
-                                                <div class="tariff-title">Стартовый</div><br>
-                                                <div class="tariff-price">2000 <span class="rub">₽</span></div>
-                                                <div class="tariff-price-description">в час</div>
-                                            </div>
-                                            <div class="tariff-body">
-                                                <div class="tariff-body-item">Предоплата от 2 часов</div>
-                                                <div class="tariff-body-item">Консультации и работы по SEO</div>
-                                                <div class="tariff-body-item">Услуги дизайнера</div>
-                                                <div class="tariff-body-item">Стандартное время реакции</div>
-                                                <div class="tariff-body-item">Неиспользованные оплаченные часы
-                                                    переносятся на следующий месяц</div>
-                                            </div>
-                                            <div class="tariff-footer">
-                                                <a href="#forma" class="contact-form tariff-footer-btn">Оставить
-                                                    заявку!</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Бизнес -->
-                                <div class="col-sm-4 col-flex col-xs-12">
-                                    <div class="tariff">
-                                        <div class="tariff-wrapper">
-                                            <div class="tariff-header">
-                                                <div class="tariff-title">Бизнес</div><br>
-                                                <div class="tariff-price">2000 <span class="rub">₽</span></div>
-                                                <div class="tariff-price-description">в час</div>
-                                            </div>
-                                            <div class="tariff-body">
-                                                <div class="tariff-body-item">Предоплата от 10 часов</div>
-                                                <div class="tariff-body-item">Консультации и работы по SEO</div>
-                                                <div class="tariff-body-item">Услуги дизайнера</div>
-                                                <div class="tariff-body-item">Высокое время реакции - до 2 рабочих дней
+            <div id="app">
+
+                <section id="block-tariffs">
+                    <h2 class="block-title">Тарифы</h2>
+                    <div>
+                        <div class="tariffs">
+                            <div class="container">
+                                <div class="row row-flex tariffs-row">
+                                    <!-- Стартовый -->
+                                    <div class="col-sm-4 col-xs-12 col-flex">
+                                        <div class="tariff">
+                                            <div class="tariff-wrapper">
+                                                <div class="tariff-header">
+                                                    <div class="tariff-title">Стартовый</div><br>
+                                                    <div class="tariff-price">2000 <span class="rub">₽</span></div>
+                                                    <div class="tariff-price-description">в час</div>
                                                 </div>
-                                                <div class="tariff-body-item">Неиспользованные часы не переносятся</div>
+                                                <div class="tariff-body">
+                                                    <div class="tariff-body-item">Предоплата от 2 часов</div>
+                                                    <div class="tariff-body-item">Консультации и работы по SEO</div>
+                                                    <div class="tariff-body-item">Услуги дизайнера</div>
+                                                    <div class="tariff-body-item">Стандартное время реакции</div>
+                                                    <div class="tariff-body-item">Неиспользованные оплаченные часы
+                                                        переносятся на следующий месяц</div>
+                                                </div>
+                                                <div class="tariff-footer">
+                                                    <a href="#tariff" class="contact-form tariff-footer-btn" @click="showModal = true">Оставить
+                                                        заявку!</a>
+                                                </div>
                                             </div>
-                                            <div class="tariff-footer">
-                                                <a href="#forma" class="contact-form tariff-footer-btn">Оставить
-                                                    заявку!</a>
+                                        </div>
+                                    </div>
+                                    <!-- Бизнес -->
+                                    <div class="col-sm-4 col-flex col-xs-12">
+                                        <div class="tariff">
+                                            <div class="tariff-wrapper">
+                                                <div class="tariff-header">
+                                                    <div class="tariff-title">Бизнес</div><br>
+                                                    <div class="tariff-price">2000 <span class="rub">₽</span></div>
+                                                    <div class="tariff-price-description">в час</div>
+                                                </div>
+                                                <div class="tariff-body">
+                                                    <div class="tariff-body-item">Предоплата от 10 часов</div>
+                                                    <div class="tariff-body-item">Консультации и работы по SEO</div>
+                                                    <div class="tariff-body-item">Услуги дизайнера</div>
+                                                    <div class="tariff-body-item">Высокое время реакции - до 2 рабочих дней
+                                                    </div>
+                                                    <div class="tariff-body-item">Неиспользованные часы не переносятся</div>
+                                                </div>
+                                                <div class="tariff-footer">
+                                                    <a href="#tariff" class="contact-form tariff-footer-btn" @click="showModal = true">Оставить
+                                                        заявку!</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- VIP -->
+                                    <div class="col-sm-4 col-flex col-xs-12">
+                                        <div class="tariff">
+                                            <div class="tariff-wrapper">
+                                                <div class="tariff-header">
+                                                    <div class="tariff-title">VIP</div><br>
+                                                    <div class="tariff-price">1800 <span class="rub">₽</span></div>
+                                                    <div class="tariff-price-description">в час</div>
+                                                </div>
+                                                <div class="tariff-body">
+                                                    <div class="tariff-body-item">Предоплата от 100 часов</div>
+                                                    <div class="tariff-body-item">Консультации и работы по SEO</div>
+                                                    <div class="tariff-body-item">Услуги дизайнера</div>
+                                                    <div class="tariff-body-item">Максимальное время реакции - в день
+                                                        обращения</div>
+                                                    <div class="tariff-body-item">Неиспользованные часы не переносятся</div>
+                                                </div>
+                                                <div class="tariff-footer">
+                                                    <a href="#tariff"
+                                                        class="contact-form tariff-footer-btn" @click="showModal = true">Оставить заявку!</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- VIP -->
-                                <div class="col-sm-4 col-flex col-xs-12">
-                                    <div class="tariff">
-                                        <div class="tariff-wrapper">
-                                            <div class="tariff-header">
-                                                <div class="tariff-title">VIP</div><br>
-                                                <div class="tariff-price">1800 <span class="rub">₽</span></div>
-                                                <div class="tariff-price-description">в час</div>
-                                            </div>
-                                            <div class="tariff-body">
-                                                <div class="tariff-body-item">Предоплата от 100 часов</div>
-                                                <div class="tariff-body-item">Консультации и работы по SEO</div>
-                                                <div class="tariff-body-item">Услуги дизайнера</div>
-                                                <div class="tariff-body-item">Максимальное время реакции - в день
-                                                    обращения</div>
-                                                <div class="tariff-body-item">Неиспользованные часы не переносятся</div>
-                                            </div>
-                                            <div class="tariff-footer">
-                                                <a href="#block-podderzhkasaytovkontaktnayaforma"
-                                                    class="contact-form tariff-footer-btn">Оставить заявку!</a>
-                                            </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="tariffs-ps">
+                                            Вам не подходят наши тарифы? Оставьте заявку и мы предложим вам индивидуальные
+                                            условия!
+                                            <a href="#" class="tariffs-link">Получить индивидуальный тариф</a>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="tariffs-ps">
-                                        Вам не подходят наши тарифы? Оставьте заявку и мы предложим вам индивидуальные
-                                        условия!
-                                        <a href="#" class="tariffs-link">Получить индивидуальный тариф</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>    
+                </section>
+
+                <modal v-if="showModal" @close="showModal = false">
+                    <h3 slot="header">Оставь заявку!</h3>
+                    <div slot="middle" class="field field--form-popup field--item">
+                        <form class="form-popup" action="https://formcarry.com/s/1bA1lcGuKw" method="post" accept-charset="UTF-8">
+                      <div class="form-group">
+                          <div class="form-type-textfield form-group">
+                              <input class="input form-control" type="text" name="Name" placeholder="Ваше имя">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="form-type-textfield form-group">
+                              <input class="input required form-control" type="text" name="Telephone" placeholder="Телефон" required="required">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="form-type-email form-group">
+                              <input class="input form-email required form-control" type="email"  name="Email" placeholder="E-mail" required="required">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="form-type-textarea">
+                              <div>
+                                  <textarea class="input form-control" name="msg" rows="5" cols="60" placeholder="Ваш комментарий"></textarea>
+                              </div>
+                          </div>
+                      </div>
+                      <div
+                          class="form-item  form-type-checkbox checkbox">
+                          <label class="control-label option form-required">
+                              <input required="required" class="form-checkbox" type="checkbox" name="consent" value="1">
+                              <span class="custom-checkbox"></span>Отправляя заявку, я даю согласие на обработку своих персональных данных.</label>
+                      </div>
+                      <div class="form-actions form-group form-wrapper">
+                          <button class="button form-submit btn-primary btn" type="submit" id="edit-submit" name="submit"
+                              value="Оставить заявку!">Оставить заявку!</button>
+                      </div>
+                        </form>
                     </div>
-                </div>
-            </section>
+                </modal>
+            </div>
 
 
             <!-- Блок последние кейсы -->
@@ -1187,7 +1256,7 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="js/slick.js"></script>
     <script src="js/history.js"></script>
-    <script defer src="all.js"></script>
+    <script src="popup/app.js"></script>
 </body>
 
 </html>
