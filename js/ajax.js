@@ -1,12 +1,13 @@
 $(".forms").submit(function (e) {
+    //Перехват события с отправкой формой
     e.preventDefault();
-    var href = $(this).attr("action");
-    var form_data = $(this).serialize();
     $.ajax({
+        //Отправка файлов
         type: "POST",
         dataType: "json",
-        url: href,
-        data: form_data,
+        url: $(this).attr("action"),
+        data: $(this).serialize(),
+        // Проверка на успешность
         success: function (response) {
             if(response.status == "success"){
             alert("Успешно!");
@@ -21,12 +22,15 @@ $(".forms").submit(function (e) {
 });
 
 $("body").on("submit", "#form-popup", function(e){
+    //Перехват события с отправкой формой
     e.preventDefault();
     $.ajax({
+        //Отправка файлов
         url: $(this).attr("action"),
         type: "POST",
         dataType: "json",
         data: $(this).serialize(),
+        // Проверка на успешность
         success: function (response) {
             if(response.status == "success"){
                 alert("Успешно!");
