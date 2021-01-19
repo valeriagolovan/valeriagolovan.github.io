@@ -4,7 +4,6 @@ Vue.component("modal", {
 new Vue({
   el: "#app",
   data: {
-    showModal: false,
-    showKok: false
+    showModal: false
   }
 });
