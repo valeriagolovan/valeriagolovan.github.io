@@ -1,9 +1,8 @@
 $(function () {
-
     $('.forms').each(function () {
         // Объявляем переменные (форма и кнопка отправки)
         var form = $(this),
-            btn = $('.button'),
+            btn = $('.form-submit'),
             check = false;
 
         // Добавляем каждому проверяемому полю, указание что поле пустое
